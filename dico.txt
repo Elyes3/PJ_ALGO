@@ -1,0 +1,13 @@
+hello
+world
+easy
+medium
+hard
+clean
+cleaner
+creation
+jouer
+test
+tester
+dev
+developer
