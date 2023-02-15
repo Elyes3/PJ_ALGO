@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <math.h>
 void main(){
 char motPiocher[100];
 struct node
@@ -229,6 +230,29 @@ void parcoursInfixe(struct node* root)
     parcoursInfixe(root->right);
     }
 }
+int nbMotsDifferents(struct node* root)
+{
+    if (root == NULL)
+        return 0;
+    int cpt = 0;
+        if (root-> val == '\0')
+        {
+            cpt = cpt + 1;
+        }
+       cpt = cpt + nbMotsDifferents(root->left);
+       cpt = cpt +  nbMotsDifferents(root->right);
+       return cpt;
+}
+int nbMotsTotal(struct node* root)
+{
+    if ( root == NULL)
+        return 0;
+        int cpt = 0;
+        cpt = cpt + root -> occ;
+        cpt = cpt + nbMotsTotal(root->left);
+        cpt = cpt +  nbMotsTotal(root->right);
+       return cpt;
+}
 int piocherMot(char *motPioche) 
 { 
  FILE* dico = NULL; // Le pointeur de fichier qui va contenir notre fichier
@@ -268,22 +292,97 @@ if (caractereLu == '\n')
  fclose(dico); 
  return 1; // Tout s'est bien passé, on retourne 1
 }
+int max(int a, int b) {
+  return (a > b)? a : b;
+}
+
+int haut(struct node* node) {
+  if (node == NULL)
+    return 0;
+  return 1 + max(haut(node->left), haut(node->right));
+}
+void graph_arbre(struct node *root){
+    int h;
+    int j=0;
+    int c=0;
+    int it=0;
+    int dl=0;
+    h=haut(root);
+    int hauteur=h-1;
+    h=h-1;
+    struct node* ch;
+    ch=creerNoeud('*');
+  if(root == NULL) return;
+printf(" %d \n", h);
+  struct node *queue[1000];
+  int front = 0;
+  int rear = 0;
+
+  queue[rear++] = root;
+
+  while((front != rear)){
+    struct node *temp = queue[front++];
+    for(int k=1;k<=(pow(2,h-1));k++){
+        printf("-");
+    }
+    if(temp->val!='\0'){
+        printf("%c", temp->val);
+    }
+    else{
+        printf("%c",'0');
+    }
+    for(int k=1;k<=(pow(2,h-1)+dl);k++){
+        printf("-");
+    }
+
+    if (j==c){
+    it++;
+    c=c+pow(2,it);
+    h--;
+    printf("\n");
+    }
+    j++;
+    if (j==(pow(2,hauteur)-1)){
+        dl=1;
+    }
+    if (j<pow(2,hauteur)){
+    if(temp->left != NULL)
+      queue[rear++] = temp->left;
+    else {
+      queue[rear++] = ch;
+    }
+    if(temp->right != NULL)
+      queue[rear++] = temp->right;
+    else {
+      queue[rear++] = ch;
+    }
+    }
+  }
+}
+
+
 srand(time(NULL));
 char buffer[100];
 char ans;
 struct node* root = NULL;
+printf("\n");
+
 for (int i = 0 ; i < 7 ; i++)
 {
 printf("\ndonner un mot :");
 scanf("%s",buffer);
 root = ajouterMot(buffer,root);
 }
-printf("\nEntrez le mot dont vous souhaitez connaitre le nombre d'occurrences : ");
+printf("le nombre de mots differents est : %d\n", nbMotsDifferents(root));
+printf("le nombre de mots total est : %d\n",nbMotsTotal(root));
 do{
+printf("\nEntrez le mot dont vous souhaitez connaitre le nombre d'occurrences : ");
 scanf("%s",buffer);
 printf("Le nombre d'occurrences est %d\n",dicoNbOcc(buffer,root));
 printf("Voulez-vous continuer ?\n");
+getchar();
 scanf("%c",&ans);
+printf("ANS : %c",ans);
 }
 while(ans != 'n' );
 }
