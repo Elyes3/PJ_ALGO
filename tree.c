@@ -10,7 +10,7 @@ void main(){
 typedef struct { char *key; int val; } t_symstruct;
 
 static t_symstruct lookuptable[] = {
-    { "help", 0 }, { "ajouter", 1 }, { "clear", 2 }, { "suppr", 3 }, { "nbTotal", 4 }, { "nbDiff", 5 }, { "arbre1", 6 }, { "arbre2", 7 }
+    { "help", 0 }, { "ajouter", 1 }, { "clear", 2 }, { "suppr", 3 }, { "nbTotal", 4 }, { "nbDiff", 5 }, { "arbre1", 6 }, { "arbre2", 7 }, { "exit", 8 }
 };
 #define NKEYS (sizeof(lookuptable)/sizeof(t_symstruct))
 char motPiocher[100];
@@ -29,7 +29,7 @@ int arbreVide(struct node* root){
         return 1;
     return 0;
 }
-  struct node* creerNoeud(char value)
+struct node* creerNoeud(char value)
  {
     struct node *new_node = (struct node*) malloc(sizeof(struct node));
     new_node -> val = value;
@@ -435,7 +435,7 @@ graph_arbre(root);
 //print2D(root);
 */
 
-printf("Salut !\nVoici les operations possible du programme :\nhelp : l'affichage du liste d'operations.\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'écran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
+printf("Salut ! Voici les operations possible du programme :\n\nhelp : l'affichage du liste d'operations.\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'écran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
 
 do{
    printf("\n");
@@ -444,7 +444,7 @@ do{
        case -1 :
             printf("Operation invalide ! Voici les options possible : \n");
        case 0 :
-            printf("\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'écran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
+            printf("\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'ecran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
             break;
        case 1 :
             printf("\nDonner un mot : ");
@@ -483,7 +483,8 @@ do{
                     print2D(root);
                 }
             break;
-
+       case 8 :
+            break;
    }
 
 
