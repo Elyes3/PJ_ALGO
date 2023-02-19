@@ -3,7 +3,16 @@
 #include <time.h>
 #include <string.h>
 #include <math.h>
+#define COUNT 10
+#define BADKEY -1
+
 void main(){
+typedef struct { char *key; int val; } t_symstruct;
+
+static t_symstruct lookuptable[] = {
+    { "help", 0 }, { "ajouter", 1 }, { "clear", 2 }, { "suppr", 3 }, { "nbTotal", 4 }, { "nbDiff", 5 }, { "arbre1", 6 }, { "arbre2", 7 }
+};
+#define NKEYS (sizeof(lookuptable)/sizeof(t_symstruct))
 char motPiocher[100];
 struct node
 {
@@ -13,7 +22,7 @@ char val;
 int occ;
 };
 struct node* arbreConsVide(){
-    return NULL; 
+    return NULL;
 }
 int arbreVide(struct node* root){
     if (root == NULL)
@@ -32,7 +41,7 @@ int arbreVide(struct node* root){
  struct node* ajouterMot(char * str,struct node * root){
         struct node* tmp;
         if (arbreVide(root) == 1 )
-        { 
+        {
             for(int i = 0 ; i < strlen(str) ; i++)
             {
                 if (i == 0)
@@ -61,9 +70,9 @@ int arbreVide(struct node* root){
                 if (str[j] == tmp -> val )
                 {
                 if (tmp -> left != NULL)
-                {   
-                    
-                    
+                {
+
+
                     j = j + 1;
                     if (j!=strlen(str))
                     {   printf("LEFT NO CREA ");
@@ -80,13 +89,13 @@ int arbreVide(struct node* root){
                 }
                 }
                 else
-                {   
+                {
                     if (tmp -> right != NULL)
                     {
                         printf("RIGHT NO CREA ");
                         tmp = tmp -> right;
                     }
-                    else 
+                    else
                     {   printf("RIGHT CREA ");
                         tmp -> right = creerNoeud(str[j]);
                         tmp = tmp -> right;
@@ -95,7 +104,7 @@ int arbreVide(struct node* root){
                     }
                 }
 
-                
+
             }
             if (tmp -> left != NULL)
             {
@@ -108,18 +117,18 @@ int arbreVide(struct node* root){
                 tmp = tmp -> left;
                 if (tmp -> right != NULL){
                 while (tmp -> right != NULL)
-                {   
+                {
                     if (tmp -> val == '\0')
                         break;
-                    else 
+                    else
                         tmp = tmp -> right;
                 }
                 if (tmp != NULL && tmp -> val == '\0'){
                     tmp -> occ = tmp -> occ +1;
                 }
                 }
-                else 
-                {  
+                else
+                {
                     tmp-> right = creerNoeud('\0');
                     tmp = tmp -> right;
                     tmp-> occ = 1;
@@ -161,13 +170,12 @@ struct node* arbreFilsDroit(struct node * root){
     return root->right;
 }
 void arbreSuppr(struct node * root){
-    if (root != NULL) 
+    if (root != NULL)
         {
             arbreSuppr(root->left);
             arbreSuppr(root->right);
             free(root);
         }
-
 }
 int dicoNbOcc(char mot[],struct node* root)
 {
@@ -189,11 +197,11 @@ int dicoNbOcc(char mot[],struct node* root)
     }
         if (tmp == NULL)
         {
-           
+
             return 0;
         }
         else
-        {  
+        {
             if (tmp->left !=NULL)
             {
             if (tmp -> left -> val == '\0')
@@ -218,9 +226,9 @@ int dicoNbOcc(char mot[],struct node* root)
 
         }
 }
-int nombreAleatoire(int nombreMax) 
-{ 
- return (rand() % nombreMax); 
+int nombreAleatoire(int nombreMax)
+{
+ return (rand() % nombreMax);
 }
 void parcoursInfixe(struct node* root)
 {   if (root!=NULL)
@@ -243,57 +251,82 @@ int nbMotsDifferents(struct node* root)
        cpt = cpt +  nbMotsDifferents(root->right);
        return cpt;
 }
-int nbMotsTotal(struct node* root)
+int dicoNbMotsTotal(struct node* root)
 {
     if ( root == NULL)
         return 0;
         int cpt = 0;
         cpt = cpt + root -> occ;
-        cpt = cpt + nbMotsTotal(root->left);
-        cpt = cpt +  nbMotsTotal(root->right);
+        cpt = cpt + dicoNbMotsTotal(root->left);
+        cpt = cpt +  dicoNbMotsTotal(root->right);
        return cpt;
 }
-int piocherMot(char *motPioche) 
-{ 
+int piocherMot(char *motPioche)
+{
  FILE* dico = NULL; // Le pointeur de fichier qui va contenir notre fichier
- int nombreMots = 0, numMotChoisi = 0, i = 0; 
- int caractereLu = 0; 
+ int nombreMots = 0, numMotChoisi = 0, i = 0;
+ int caractereLu = 0;
  dico = fopen("dico.txt", "r"); // On ouvre le dictionnaire en lecture seule
  // On vérifie si on a réussi à ouvrir le dictionnaire
  if (dico == NULL) // Si on n'a PAS réussi à ouvrir le fichier
- { 
- printf("\nImpossible de charger le dictionnaire de mots"); 
+ {
+ printf("\nImpossible de charger le dictionnaire de mots");
  return 0; // On retourne 0 pour indiquer que la fonction a échoué
  // À la lecture du return, la fonction s'arrête immédiatement.
- } 
+ }
  // On compte le nombre de mots dans le fichier (il suffit de compter les
  // entrées \n
  do
- { 
- caractereLu = fgetc(dico); 
- if (caractereLu == '\n') 
- nombreMots++; 
- } while(caractereLu != EOF); 
+ {
+ caractereLu = fgetc(dico);
+ if (caractereLu == '\n')
+ nombreMots++;
+ } while(caractereLu != EOF);
  numMotChoisi = nombreAleatoire(nombreMots); // On pioche un mot au hasard
- // On recommence à lire le fichier depuis le début. On s'arrête lorsqu'on est arrivé au bon 
- rewind(dico); 
- while (numMotChoisi > 0) 
- { 
- caractereLu = fgetc(dico); 
+ // On recommence à lire le fichier depuis le début. On s'arrête lorsqu'on est arrivé au bon
+ rewind(dico);
+ while (numMotChoisi > 0)
+ {
+ caractereLu = fgetc(dico);
 if (caractereLu == '\n')
- numMotChoisi--; 
- } 
+ numMotChoisi--;
+ }
  /* Le curseur du fichier est positionné au bon endroit.
  On n'a plus qu'à faire un fgets qui lira la ligne */
- fgets(motPioche, 100, dico); 
+ fgets(motPioche, 100, dico);
  // On vire le \n à la fin
 
- motPioche[strlen(motPioche) - 1] = '\0'; 
- fclose(dico); 
+ motPioche[strlen(motPioche) - 1] = '\0';
+ fclose(dico);
  return 1; // Tout s'est bien passé, on retourne 1
 }
 int max(int a, int b) {
   return (a > b)? a : b;
+}
+
+void print2DUtil(struct node* root, int space)
+{
+    if (root == NULL)
+        return;
+    space += COUNT;
+    print2DUtil(root->right, space);
+    printf("\n");
+    for (int i = COUNT; i < space; i++)
+        printf(" ");
+
+    if(root->val!='\0'){
+        printf("%c", root->val);
+    }
+    else{
+        printf("%d",root->occ);
+    }
+
+    print2DUtil(root->left, space);
+}
+
+void print2D(struct node* root)
+{
+    print2DUtil(root, 0);
 }
 
 int haut(struct node* node) {
@@ -360,21 +393,32 @@ printf(" %d \n", h);
   }
 }
 
+int keyfromstring(char *key)
+{
+    int i;
+    for (i=0; i < NKEYS; i++) {
+        t_symstruct *sym = &lookuptable[i];
+        if (strcmp(sym->key, key) == 0)
+            return sym->val;
+    }
+    return BADKEY;
+}
 
 srand(time(NULL));
 char buffer[100];
-char ans;
+char ans[25];
+char conf;
 struct node* root = NULL;
 printf("\n");
 
-for (int i = 0 ; i < 7 ; i++)
+/*for (int i = 0 ; i < 5 ; i++)
 {
 printf("\ndonner un mot :");
 scanf("%s",buffer);
 root = ajouterMot(buffer,root);
 }
-printf("le nombre de mots differents est : %d\n", nbMotsDifferents(root));
-printf("le nombre de mots total est : %d\n",nbMotsTotal(root));
+printf("\nLe nombre de mots differents est : %d\n", nbMotsDifferents(root));
+printf("\nLe nombre de mots total est : %d\n",dicoNbMotsTotal(root));
 do{
 printf("\nEntrez le mot dont vous souhaitez connaitre le nombre d'occurrences : ");
 scanf("%s",buffer);
@@ -382,7 +426,67 @@ printf("Le nombre d'occurrences est %d\n",dicoNbOcc(buffer,root));
 printf("Voulez-vous continuer ?\n");
 getchar();
 scanf("%c",&ans);
+if(ans == "clear")
+    arbre
 printf("ANS : %c",ans);
 }
 while(ans != 'n' );
+graph_arbre(root);
+//print2D(root);
+*/
+
+printf("Salut !\nVoici les operations possible du programme :\nhelp : l'affichage du liste d'operations.\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'écran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
+
+do{
+   printf("\n");
+   scanf("%s",ans);
+   switch (keyfromstring(ans)){
+       case -1 :
+            printf("Operation invalide ! Voici les options possible : \n");
+       case 0 :
+            printf("\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'écran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
+            break;
+       case 1 :
+            printf("\nDonner un mot : ");
+            scanf("%s",buffer);
+            root = ajouterMot(buffer,root);
+            break;
+       case 2 :
+            system("cls");
+            break;
+       case 3 :
+            if(arbreVide(root))
+                    printf("\nLe dictionnaire est deja vide !");
+                else{
+                    arbreSuppr(root);
+                    struct node* root = NULL;
+                    printf("\nLe dictionnaire est maintenant vide !");
+                }
+            break;
+       case 4 :
+            printf("\nLe nombre de mots total est : %d\n",dicoNbMotsTotal(root));
+            break;
+       case 5 :
+            printf("\nLe nombre de mots differents est : %d\n", nbMotsDifferents(root));
+            break;
+       case 6 :
+            if(arbreVide(root))
+                    printf("\nLe dictionnaire est vide !");
+                else{
+                    graph_arbre(root);
+                }
+            break;
+       case 7 :
+            if(arbreVide(root))
+                    printf("\nLe dictionnaire est vide !");
+                else{
+                    print2D(root);
+                }
+            break;
+
+   }
+
+
+}while(strcmp(ans, "exit"));
+arbreSuppr(root);
 }
