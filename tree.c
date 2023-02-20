@@ -318,7 +318,7 @@ void print2DUtil(struct node* root, int space)
         printf("%c", root->val);
     }
     else{
-        printf("%d",root->occ);
+        printf("\\o occ: %d", root->occ);
     }
 
     print2DUtil(root->left, space);
@@ -438,7 +438,7 @@ graph_arbre(root);
 printf("Salut ! Voici les operations possible du programme :\n\nhelp : l'affichage du liste d'operations.\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'écran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
 
 do{
-   printf("\n");
+   printf("\n>");
    scanf("%s",ans);
    switch (keyfromstring(ans)){
        case -1 :
@@ -459,7 +459,10 @@ do{
                     printf("\nLe dictionnaire est deja vide !");
                 else{
                     arbreSuppr(root);
-                    struct node* root = NULL;
+                    root = creerNoeud('\0');
+                    struct node* tmp = root;
+                    root = NULL;
+                    free(tmp);
                     printf("\nLe dictionnaire est maintenant vide !");
                 }
             break;
