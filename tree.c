@@ -435,7 +435,7 @@ graph_arbre(root);
 //print2D(root);
 */
 
-printf("Salut ! Voici les operations possible du programme :\n\nhelp : l'affichage du liste d'operations.\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'écran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
+printf("Salut ! Voici les operations possible du programme :\n\nhelp : l'affichage du liste d'operations.\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'écran de l'affichage.\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
 
 do{
    printf("\n>");
@@ -444,7 +444,7 @@ do{
        case -1 :
             printf("Operation invalide ! Voici les options possible : \n");
        case 0 :
-            printf("\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'ecran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
+            printf("\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'ecran de l'affichage.\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nexit : quitter le programme.\n");
             break;
        case 1 :
             printf("\nDonner un mot : ");
