@@ -33,7 +33,7 @@ char ans[25];
 char conf;
 struct node* root = NULL;
 printf("\n");
-printf("Bonjour ! Voici les operations possible du programme :\n\nhelp : l'affichage du liste d'operations.\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'ecran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nnbOcc : Connaitre le nombre d'occurences d'un mot.\nrandomize : Generer l'arbre a partir d'un fichier dictionnaire aleatoirement \nexit : quitter le programme.\n");
+printf("Bonjour ! Voici les operations possible du programme :\n\nhelp : l'affichage du liste d'operations.\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'ecran de l'affichage.\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nnbOcc : connaitre le nombre d'occurences d'un mot.\nrandomize : generer l'arbre a partir d'un fichier dictionnaire aleatoirement.\nexit : quitter le programme.\n");
 
 do{
    printf("\n>");
@@ -42,7 +42,7 @@ do{
        case -1 :
             printf("Operation invalide ! Voici les options possible : \n");
        case 0 :
-            printf("\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'ecran de l'affichage\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nnbOcc : Connaitre le nombre d'occurences d'un mot.\nrandomize : Generer l'arbre a partir d'un fichier dictionnaire aleatoirement \nexit : quitter le programme.\n");
+            printf("\najouter : l'ajout d'un mot au dictionnaire.\nclear : efface l'ecran de l'affichage.\nsuppr : suppression du dictionnaire.\nnbTotal : l'affichage du nombre total des mots du dictionnaire.\nnbDiff : l'affichage du nombre des mots differents.\narbre1 : l'affichage du l'arbre (version 1).\narbre2 : l'affichage du l'arbre (version 2).\nnbOcc : Connaitre le nombre d'occurences d'un mot.\nrandomize : Generer l'arbre a partir d'un fichier dictionnaire aleatoirement.\nexit : quitter le programme.\n");
             break;
        case 1 :
             printf("\nDonner un mot : ");
@@ -87,12 +87,16 @@ do{
        case 8 :
             break;
        case 9 :
-
             printf("Combien de mots voulez-vous piocher\n");
-            int nbW;
+            int nbW = NULL;
             char fileName[50];
             char word[100];
             scanf("%d",&nbW);
+            if(nbW == NULL)
+                {
+                    printf("TypeError !\n");
+                    continue;
+                }
             srand(time(NULL));
             printf("Donner le nom du fichier\n");
             scanf("%s",fileName);
@@ -104,8 +108,8 @@ do{
                 else break;
             }
             break;
-        case 10 : 
-            
+        case 10 :
+
             printf("Saisir un mot dont vous souhaitez connaitre le nombre d'occurences\n");
             char occWord[100];
             scanf("%s",occWord);
