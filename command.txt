@@ -1,0 +1,1 @@
+gcc tree.c creerNoeud.c arbreVide.c  ajouterMot.c arbrePrimitiveAcces.c arbreSuppr.c dicoNbOcc.c nbMotsCalculs.c afficherArbre2.c piocherMot.c afficherArbre1.c -o prog
